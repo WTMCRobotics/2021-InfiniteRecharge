@@ -34,7 +34,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpiutil.math.MathUtil;
-import frc.robot.auton_instructions.*;
+import frc.robot.auton.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the

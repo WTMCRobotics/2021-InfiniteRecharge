@@ -1,4 +1,4 @@
-package frc.robot.auton_instructions;
+package frc.robot.auton;
 
 import edu.wpi.first.wpilibj.SolenoidBase;
 import frc.robot.Robot;
@@ -9,9 +9,9 @@ public class SetPistonExtended extends Instruction {
 	SolenoidBase solenoid;
 
 	/**
-     * @param solenoid the Solenoid or DoubleSolenoid to be extended or retracted
-     * @param value whether the solenoid should be extended
-     */
+	 * @param solenoid the Solenoid or DoubleSolenoid to be extended or retracted
+	 * @param value    whether the solenoid should be extended
+	 */
 	public SetPistonExtended(SolenoidBase solenoid, boolean value) {
 		this.solenoid = solenoid;
 		this.value = value;

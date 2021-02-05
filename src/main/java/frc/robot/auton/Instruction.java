@@ -1,4 +1,4 @@
-package frc.robot.auton_instructions;
+package frc.robot.auton;
 
 import frc.robot.Robot;
 
