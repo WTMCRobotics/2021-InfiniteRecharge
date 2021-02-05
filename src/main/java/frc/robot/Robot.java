@@ -731,9 +731,9 @@ public class Robot extends TimedRobot {
             if (intakeTime > INTAKE_COUNTER_COUNT_TIME) {
                 System.out.println("ball incoming");
                 ballsStored++;
-                System.out.println("ballsStored: "+ballsStored);
-            } else if(intakeTime > 0) {
-                System.out.println("intakeTime: "+intakeTime);
+                System.out.println("ballsStored: " + ballsStored);
+            } else if (intakeTime > 0) {
+                System.out.println("intakeTime: " + intakeTime);
             }
             intakeTime = 0;
         }
