@@ -765,3 +765,11 @@ public class Robot extends TimedRobot {
         }
     }
 }
+
+enum Challenge {
+    GALACTIC_SEARCH, AUTONAV, HYPERDRIVE, INTERSTELLAR_ACCURACY, POWERPORT
+}
+
+enum Path {
+    BARREL_RACING, SLALOM, BOUNCE
+}
