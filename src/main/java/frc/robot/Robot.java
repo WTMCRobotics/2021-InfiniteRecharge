@@ -609,10 +609,12 @@ public class Robot extends TimedRobot {
         inches = -inches;
         leftMaster.set(ControlMode.MotionMagic, inchesToTicks(inches));
         rightMaster.set(ControlMode.MotionMagic, inchesToTicks(inches));
-        if (Math.abs(leftMaster.getSelectedSensorPosition() - inchesToTicks(inches)) < inchesToTicks(distanceMarginOfError)
-                && Math.abs(leftMaster.getActiveTrajectoryVelocity()) < inchesToTicks(1) * 10
-                && Math.abs(rightMaster.getSelectedSensorPosition() - inchesToTicks(inches)) < inchesToTicks(distanceMarginOfError)
-                && Math.abs(rightMaster.getActiveTrajectoryVelocity()) < inchesToTicks(1) * 10) {
+        if (
+            Math.abs(leftMaster.getSelectedSensorPosition() - inchesToTicks(inches)) < inchesToTicks(distanceMarginOfError)
+            && Math.abs(leftMaster.getActiveTrajectoryVelocity()) < inchesToTicks(1) * 10
+            && Math.abs(rightMaster.getSelectedSensorPosition() - inchesToTicks(inches)) < inchesToTicks(distanceMarginOfError)
+            && Math.abs(rightMaster.getActiveTrajectoryVelocity()) < inchesToTicks(1) * 10
+        ) {
             return true;
         } else {
             return false;
