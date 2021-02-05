@@ -49,33 +49,15 @@ public class Robot extends TimedRobot {
     // auton related constants and variables
     // ##########################################
 
-    // auton modes
-    private static final int LEFT_AUTON_POS = 3;
-    private static final int TARGET_ZONE_AUTON_POS = 2;
-    private static final int TRENCH_AUTON_POS = 1;
+    /** dropdown for choosing which challenge */
+    private final SendableChooser<Challenge> CHALLENGE_CHOOSER = new SendableChooser<>();
+    /** the challenge selected by the user */
+    private Challenge selectedChallenge;
 
-    private static final int RIGHT_RENDEZVOUS = 1;
-    private static final int LEFT_RENDEZVOUS = 2;
-    private static final int TRENCH = 3;
-    private static final int LOADING_ZONE = 4;
-
-    // SendableChooser<String> puts a dropdown menu on the dashboard
-    private final SendableChooser<Integer> STARTING_POS_CHOOSER = new SendableChooser<>();
-    private int startingPosSelected; // the auton mode chosen by the dashboard
-    // SendableChooser<String> puts a dropdown menu on the dashboard
-    private final SendableChooser<Boolean> GO_DIRECTLY_CHOOSER = new SendableChooser<>();
-    private boolean goDirectlyPosSelected; // the auton mode chosen by the dashboard
-    // SendableChooser<String> puts a dropdown menu on the dashboard
-    private final SendableChooser<Integer> TARGET_BALL_POS_CHOOSER = new SendableChooser<>();
-    private int TargetBallPosSelected; // the auton mode chosen by the dashboard
-
-    boolean shouldGoDirectlyToScore = true;
-
-    int startingPosition = 0;
-    static final int STARTING_POSITION_LEFT = 1;
-    static final int STARTING_POSITION_CENTER = 2;
-    static final int STARTING_POSITION_RIGHT = 3;
-    int targetPickupLocation = 0;
+    /** dropdown for choosing which path */
+    private final SendableChooser<Path> PATH_CHOOSER = new SendableChooser<>();
+    /** the path selected by the user */
+    private Path selectedPath;
 
     ArrayList<Instruction> autonInstructions = new ArrayList<Instruction>();
 
@@ -91,8 +73,9 @@ public class Robot extends TimedRobot {
     static final int INTAKE_COUNTER_SENSOR_ID = 3; // sensor for counting balls
 
     // Binary Sensors
-    static final DigitalInput ROBOT_SENSOR = new DigitalInput(ROBOT_SENSOR_ID); // this should be pulled low on the 2016 Practice
-                                                                  // Robot
+    static final DigitalInput ROBOT_SENSOR = new DigitalInput(ROBOT_SENSOR_ID); // this should be pulled low on the 2016
+                                                                                // Practice
+    // Robot
     static final DigitalInput HANG_SET_SENSOR = new DigitalInput(HANG_SET_SENSOR_ID); // sensor for when the winch is
                                                                                       // extended
     static final DigitalInput HANG_DEFAULT_SENSOR = new DigitalInput(HANG_DEFAULT_SENSOR_ID); // sensor for when the
@@ -255,23 +238,18 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
-        STARTING_POS_CHOOSER.addOption("Left (PS2)", LEFT_AUTON_POS);
-        STARTING_POS_CHOOSER.addOption("Target Zone", TARGET_ZONE_AUTON_POS);
-        STARTING_POS_CHOOSER.addOption("Trench", TRENCH_AUTON_POS);
-        
-        SmartDashboard.putData("Starting Position", STARTING_POS_CHOOSER);
+        System.out.println("starting robotInit()");
 
-        GO_DIRECTLY_CHOOSER.addOption("yes", true);
-        GO_DIRECTLY_CHOOSER.addOption("no", false);
-        SmartDashboard.putData("Go Directly to Target Zone", GO_DIRECTLY_CHOOSER);
+        CHALLENGE_CHOOSER.addOption("Galactic Search", Challenge.GALACTIC_SEARCH);
+        CHALLENGE_CHOOSER.addOption("AutoNav", Challenge.AUTONAV);
 
-        TARGET_BALL_POS_CHOOSER.addOption("Right Rendezvous", RIGHT_RENDEZVOUS);
-        TARGET_BALL_POS_CHOOSER.addOption("Left Rendezvous", LEFT_RENDEZVOUS);
-        TARGET_BALL_POS_CHOOSER.addOption("Trench", TRENCH);
-        TARGET_BALL_POS_CHOOSER.addOption("Loading Zone", LOADING_ZONE);
-        SmartDashboard.putData("Target Ball Position", TARGET_BALL_POS_CHOOSER);
+        SmartDashboard.putData("Challenge", CHALLENGE_CHOOSER);
 
-        System.out.println("this is to test the debug console and robotInit()");
+        PATH_CHOOSER.addOption("Barrel Racing", Path.BARREL_RACING);
+        PATH_CHOOSER.addOption("Bounce", Path.BOUNCE);
+        PATH_CHOOSER.addOption("Slalom", Path.SLALOM);
+
+        SmartDashboard.putData("Path", PATH_CHOOSER);
 
         isPracticeRobot = !ROBOT_SENSOR.get();
         if (isPracticeRobot) {
