@@ -59,6 +59,7 @@ public class Robot extends TimedRobot {
     /** the path selected by the user */
     private Path selectedPath;
 
+    /** a list of instructions to follow */
     ArrayList<Instruction> autonInstructions = new ArrayList<Instruction>();
 
     // ##########################################
@@ -129,24 +130,18 @@ public class Robot extends TimedRobot {
                                                                                                           // m/s/s
     ProfiledPIDController rotationPID;
 
-    // The maximum distance from the destination considered close enough
+    /** The maximum distance from the destination considered close enough */
     private static final double distanceMarginOfError = 0.5;
 
-    // The margin of error for angles when turning in auton
+    /** The margin of error for angles when turning in auton */
     private static final double angleMarginOfError = 5;
 
-    /**
-     * true if ROBOT_SENSOR is pulled low
-     */
+    /** true if ROBOT_SENSOR is pulled low */
     boolean isPracticeRobot;
-    /**
-     * the circumference of the drive wheels
-     */
+    /** the circumference of the drive wheels */
     double circumference;
 
-    /**
-     * weather to use Arcade (true) or tank (false) style controls
-     */
+    /** weather to use Arcade (true) or tank (false) style controls */
     boolean ArcadeDrive = true;
 
     static final Gains PRACTICE_ROBOT_GAINS = new Gains(0.2, 0.00035, 1.5, 0.2, 0, 1.0);
@@ -224,8 +219,8 @@ public class Robot extends TimedRobot {
 
     static final int PCM_RATCHET = 2;
 
-    boolean extended = false; //TODO figure out what this is for and comment it
-    boolean retracted = true; //TODO figure out what this is for and comment it
+    boolean extended = false; // TODO figure out what this is for and comment it
+    boolean retracted = true; // TODO figure out what this is for and comment it
 
     Compressor compressor = new Compressor(1);
 
@@ -352,7 +347,7 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         hang.tick();
-        
+
         SmartDashboard.putNumber("Balls Stored", ballsStored);
     }
 
@@ -362,17 +357,17 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledPeriodic() {
-        try{
+        try {
             startingPosSelected = STARTING_POS_CHOOSER.getSelected();
-            //System.out.println("starting Pos selected: " + startingPosSelected);
+            // System.out.println("starting Pos selected: " + startingPosSelected);
             goDirectlyPosSelected = GO_DIRECTLY_CHOOSER.getSelected();
-            //System.out.println("go directly selected: " + goDirectlyPosSelected);
+            // System.out.println("go directly selected: " + goDirectlyPosSelected);
             TargetBallPosSelected = TARGET_BALL_POS_CHOOSER.getSelected();
-            //System.out.println("target ball Pos selected: " + TargetBallPosSelected);
+            // System.out.println("target ball Pos selected: " + TargetBallPosSelected);
 
-            //this line will run only if the other lines didn't crash
+            // this line will run only if the other lines didn't crash
             SmartDashboard.putBoolean("Ready", true);
-        } catch(NullPointerException e){
+        } catch (NullPointerException e) {
             DriverStation.reportError("auton path not configured!", true);
             SmartDashboard.putBoolean("Ready", false);
         }
@@ -706,7 +701,6 @@ public class Robot extends TimedRobot {
         }
     } // END of UpdateCompressor() function
 
-
     /**
      * sets a pneumatic piston to be extended or retracted
      * 
@@ -755,11 +749,10 @@ public class Robot extends TimedRobot {
             popperCounterTime = 0;
         }
 
-        if(shoudSetPopper){
+        if (shoudSetPopper) {
             if (popperOutTime-- > 0) {
                 popper.set(ControlMode.PercentOutput, POPPER_SPEED_OUT);
-            } else if (popperInTime-- > 0
-            ) {
+            } else if (popperInTime-- > 0) {
                 popper.set(ControlMode.PercentOutput, POPPER_SPEED_IN);
             } else {
                 popper.set(ControlMode.PercentOutput, 0);
@@ -768,7 +761,7 @@ public class Robot extends TimedRobot {
 
         if (drawbridgeSol.get() == Value.kForward) {
             ballsStored = 0;
-            System.out.println("ballsStored: "+ballsStored);
+            System.out.println("ballsStored: " + ballsStored);
         }
     }
 }
