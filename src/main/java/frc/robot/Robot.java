@@ -358,12 +358,8 @@ public class Robot extends TimedRobot {
     @Override
     public void disabledPeriodic() {
         try {
-            startingPosSelected = STARTING_POS_CHOOSER.getSelected();
-            // System.out.println("starting Pos selected: " + startingPosSelected);
-            goDirectlyPosSelected = GO_DIRECTLY_CHOOSER.getSelected();
-            // System.out.println("go directly selected: " + goDirectlyPosSelected);
-            TargetBallPosSelected = TARGET_BALL_POS_CHOOSER.getSelected();
-            // System.out.println("target ball Pos selected: " + TargetBallPosSelected);
+            selectedChallenge = CHALLENGE_CHOOSER.getSelected();
+            selectedPath = PATH_CHOOSER.getSelected();
 
             // this line will run only if the other lines didn't crash
             SmartDashboard.putBoolean("Ready", true);
