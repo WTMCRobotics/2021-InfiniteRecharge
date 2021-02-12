@@ -62,6 +62,11 @@ public class Robot extends TimedRobot {
     /** a list of instructions to follow */
     ArrayList<Instruction> autonInstructions = new ArrayList<Instruction>();
 
+    /** the width of the robot in inches */
+    public static final float robotWidth = 36;
+    /** the length of the robot in inches */
+    public static final float robotLength = 40;
+
     // ##########################################
     // Digital IO related constants
     // ##########################################
@@ -454,10 +459,46 @@ public class Robot extends TimedRobot {
 
                         break;
                     case SLALOM:
-
+                        autonInstructions.add(new MoveInch(this.robotLength / 2));
+                        autonInstructions.add(new TurnDeg(-45)); // e2
+                        autonInstructions.add(new MoveInch(60 * Math.sqrt(2)));
+                        autonInstructions.add(new TurnDeg(45)); // c4
+                        autonInstructions.add(new MoveInch(120));
+                        autonInstructions.add(new TurnDeg(45)); // c8
+                        autonInstructions.add(new MoveInch(60 * Math.sqrt(2)));
+                        autonInstructions.add(new TurnDeg(-90)); // e10
+                        autonInstructions.add(new MoveInch(30 * Math.sqrt(2)));
+                        autonInstructions.add(new TurnDeg(-90)); // d11
+                        autonInstructions.add(new MoveInch(30 * Math.sqrt(2))); 
+                        autonInstructions.add(new TurnDeg(90)); // c10
+                        autonInstructions.add(new MoveInch(60 * Math.sqrt(2))); 
+                        autonInstructions.add(new TurnDeg(45)); // e8
+                        autonInstructions.add(new MoveInch(120));
+                        autonInstructions.add(new TurnDeg(45)); // e4\
+                        autonInstructions.add(new MoveInch(60 * Math.sqrt(2))); 
                         break;
                     case BOUNCE:
-
+                        autonInstructions.add(new MoveInch(30 + this.robotLength / 2));
+                        autonInstructions.add(new TurnDeg(-90)); // c3
+                        autonInstructions.add(new MoveInch(60 - this.robotLength / 2));
+                        //a3
+                        autonInstructions.add(new MoveInch(-60 + this.robotLength / 2)); 
+                        autonInstructions.add(new TurnDeg(-45)); // c3
+                        autonInstructions.add(new MoveInch(-60 * Math.sqrt(2)));
+                        autonInstructions.add(new TurnDeg(90)); // e5
+                        autonInstructions.add(new MoveInch(30 * Math.sqrt(2)));
+                        autonInstructions.add(new TurnDeg(-45)); // d6
+                        autonInstructions.add(new MoveInch(90 - this.robotLength / 2));
+                        // a6
+                        autonInstructions.add(new MoveInch(-120 + this.robotLength / 2));
+                        autonInstructions.add(new TurnDeg(90)); // e6
+                        autonInstructions.add(new MoveInch(90));
+                        autonInstructions.add(new TurnDeg(-90)); // e9
+                        autonInstructions.add(new MoveInch(120 - this.robotLength / 2));
+                        // a9
+                        autonInstructions.add(new MoveInch(-30 + this.robotLength / 2));
+                        autonInstructions.add(new TurnDeg(-45)); // b9
+                        autonInstructions.add(new MoveInch(-60));
                         break;
                 }
                 break;
