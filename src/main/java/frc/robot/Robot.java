@@ -72,23 +72,30 @@ public class Robot extends TimedRobot {
     // ##########################################
 
     // DIO IDs
-    static final int ROBOT_SENSOR_ID = 9; // this should be pulled low on the 2016 Practice Robot
-    static final int HANG_SET_SENSOR_ID = 0; // sensor for when the winch is extended
-    static final int HANG_DEFAULT_SENSOR_ID = 1; // sensor for when the winch is retracted
-    static final int INTAKE_SENSOR_ID = 2; // sensor for when a ball is waiting to be popped up
-    static final int INTAKE_COUNTER_SENSOR_ID = 3; // sensor for counting balls
+
+    /** this should be pulled low on the 2016 Practice Robot */
+    static final int ROBOT_SENSOR_ID = 9;
+    /** sensor for when the winch is extended */
+    static final int HANG_SET_SENSOR_ID = 0;
+    /** sensor for when the winch is retracted */
+    static final int HANG_DEFAULT_SENSOR_ID = 1;
+    /** sensor for when a ball is waiting to be popped up */
+    static final int INTAKE_SENSOR_ID = 2;
+    /** sensor for counting balls */
+    static final int INTAKE_COUNTER_SENSOR_ID = 3;
 
     // Binary Sensors
-    static final DigitalInput ROBOT_SENSOR = new DigitalInput(ROBOT_SENSOR_ID); // this should be pulled low on the 2016
-                                                                                // Practice
-    // Robot
-    static final DigitalInput HANG_SET_SENSOR = new DigitalInput(HANG_SET_SENSOR_ID); // sensor for when the winch is
-                                                                                      // extended
-    static final DigitalInput HANG_DEFAULT_SENSOR = new DigitalInput(HANG_DEFAULT_SENSOR_ID); // sensor for when the
-                                                                                              // winch is retracted
-    static final DigitalInput INTAKE_SENSOR = new DigitalInput(INTAKE_SENSOR_ID); // sensor for when a ball is waiting
-                                                                                  // to be popped up
-    static final DigitalInput POPPER_SENSOR = new DigitalInput(INTAKE_COUNTER_SENSOR_ID); // sensor for counting balls
+
+    /** this should be pulled low on the 2016 Practice Robot */
+    static final DigitalInput ROBOT_SENSOR = new DigitalInput(ROBOT_SENSOR_ID);
+    /** sensor for when the winch is extended */ 
+    static final DigitalInput HANG_SET_SENSOR = new DigitalInput(HANG_SET_SENSOR_ID);
+    /** sensor for when the winch is retracted */
+    static final DigitalInput HANG_DEFAULT_SENSOR = new DigitalInput(HANG_DEFAULT_SENSOR_ID);
+    /** sensor for when a ball is waiting to be popped up */
+    static final DigitalInput INTAKE_SENSOR = new DigitalInput(INTAKE_SENSOR_ID);
+    /** sensor for counting balls */
+    static final DigitalInput POPPER_SENSOR = new DigitalInput(INTAKE_COUNTER_SENSOR_ID);
 
     // ##########################################
     // talon related constants and variables
@@ -112,15 +119,17 @@ public class Robot extends TimedRobot {
     TalonSRX intake = new TalonSRX(INTAKE_ID);
     TalonSRX popper = new TalonSRX(POPPER_ID);
 
-    /**
-     * the number of ticks in a full rotation
-     */
+    /** the number of ticks in a full rotation */
     static final int encoderRotation = 4096;
 
     // talon config
-    public static final int SLOT_IDX = 0; // Which PID slot to pull gains from
-    public static final int PID_LOOP_IDX = 0; // Which PID loop to pull gains from
-    public static final int TIMEOUT_MS = 30; // amount of time in ms to wait for confirmation
+
+    /** Which PID slot to pull gains from */
+    public static final int SLOT_IDX = 0;
+    /** Which PID loop to pull gains from */
+    public static final int PID_LOOP_IDX = 0;
+    /** amount of time in ms to wait for confirmation */
+    public static final int TIMEOUT_MS = 30;
 
     // ##########################################
     // drivetrain and pid related constants and variables
@@ -131,8 +140,7 @@ public class Robot extends TimedRobot {
     static final Gains PRACTICE_ROTATION_GAINS = new Gains(0.004, 0.003, 0.001, 0.0, 0, 0.0);
     static final Gains COMPETITION_ROTATION_GAINS = new Gains(0.04, 0.003, 0.001, 0.0, 0, 0.0);
     static Gains rotationGains;
-    static final Constraints ROTATIONAL_GAIN_CONSTRAINTS = new Constraints(Double.POSITIVE_INFINITY, 20); // m/s and
-                                                                                                          // m/s/s
+    static final Constraints ROTATIONAL_GAIN_CONSTRAINTS = new Constraints(Double.POSITIVE_INFINITY, 20); // m/s and m/s^2
     ProfiledPIDController rotationPID;
 
     /** The maximum distance from the destination considered close enough */
@@ -671,6 +679,13 @@ public class Robot extends TimedRobot {
         return encoderRotation * inches / circumference;
     }
 
+    /**
+     * Turns robot a number of degrees. Should be called every tick until it returns true.
+     * 
+     * @param radians the number of radians to turn
+     * 
+     * @return true if done
+     */
     boolean turnRads(double radians) {
         return turnDegs(radians * 180 / Math.PI);
     }
