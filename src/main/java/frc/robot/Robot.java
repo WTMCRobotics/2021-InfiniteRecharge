@@ -183,7 +183,7 @@ public class Robot extends TimedRobot {
     int popperOutTime = 0;
 
     int popperCounterTime; // the number of cycles that the counter sensor has been interrupted for
-    static final int INTAKE_COUNTER_COUNT_TIME = 3; // the number of cycles that a ball interruptes the sensor for when passing
+    static final int INTAKE_COUNTER_COUNT_TIME = 3; // the number of cycles that a ball interrupts the sensor for when passing
     int intakeTime; // the number of cycles that the counter sensor has bean interrupted for
     static final int POPPER_COUNTER_JAM_TIME = 20; // the number of cycles that constitutes a popper jam
     int ballsStored = 0; // the number of balls in the robot
@@ -756,8 +756,8 @@ public class Robot extends TimedRobot {
         }
     }
 
-    // this code is called from auton and teleop periodic and uses sensors to automatically handel the popper
-    void handlePopper(boolean shoudSetPopper) {
+    // this code is called from auton and teleop periodic and uses sensors to automatically handle the popper
+    void handlePopper(boolean shouldSetPopper) {
         // if a ball is ready to be popped
         if (!INTAKE_SENSOR.get()) {
             popperInTime = POPPER_TIME_IN;
@@ -784,7 +784,7 @@ public class Robot extends TimedRobot {
             popperCounterTime = 0;
         }
 
-        if (shoudSetPopper) {
+        if (shouldSetPopper) {
             if (popperOutTime-- > 0) {
                 popper.set(ControlMode.PercentOutput, POPPER_SPEED_OUT);
             } else if (popperInTime-- > 0) {
