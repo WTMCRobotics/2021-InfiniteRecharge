@@ -369,7 +369,9 @@ public class Robot extends TimedRobot {
     public void disabledPeriodic() {
         try {
             selectedChallenge = CHALLENGE_CHOOSER.getSelected();
-            selectedPath = PATH_CHOOSER.getSelected();
+            if (selectedChallenge == Challenge.AUTONAV) {
+                selectedPath = PATH_CHOOSER.getSelected();
+            }
 
             // this line will run only if the other lines didn't crash
             SmartDashboard.putBoolean("Ready", true);
