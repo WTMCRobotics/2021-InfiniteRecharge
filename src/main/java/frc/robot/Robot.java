@@ -200,7 +200,6 @@ public class Robot extends TimedRobot {
     // ##########################################
 
     XboxController xboxController = new XboxController(0); // driver
-    XboxController gHeroController = new XboxController(1); // co-driver
     double leftjoyY; // y-axis of the left joystick on the driver's controller
     double rightjoyY; // y-axis of the right joystick on the driver's controller
     double leftjoyX; // x-axis of the left joystick on the driver's controller
@@ -208,6 +207,7 @@ public class Robot extends TimedRobot {
 
     static final int START = 7; // the mapping of the start button on a xbox controller
     static final int SELECT = 8; // the mapping of the select button on a xbox controller
+    static final int A_BUTTON = 1; // the mapping of the A button on a xbox controller
     static final int R_STICK = 10; // the mapping of the right shoulder on a xbox controller
     static final int L_STICK = 9; // the mapping of the left shoulder on a xbox controller
     static final int R_SHOULDER = 6; // the mapping of the right shoulder on a xbox controller
@@ -551,12 +551,12 @@ public class Robot extends TimedRobot {
         rightjoyX = xboxController.getX(GenericHID.Hand.kRight);
         arcadeButton = xboxController.getRawButton(L_STICK);
         tankButton = xboxController.getRawButton(R_STICK);
-        drawbridgeButton = 1 == gHeroController.getX(GenericHID.Hand.kRight);
+        drawbridgeButton = xboxController.getRawButton(A_BUTTON);
         intakeInButton = 0.1 < xboxController.getTriggerAxis(GenericHID.Hand.kLeft);
         intakeOutButton = 0.1 < xboxController.getTriggerAxis(GenericHID.Hand.kRight);
         popperInButton = xboxController.getRawButton(L_SHOULDER);
         popperOutButton = xboxController.getRawButton(R_SHOULDER);
-        hangButton = gHeroController.getName().isEmpty() ? false : 0.5 > gHeroController.getTriggerAxis(GenericHID.Hand.kLeft);
+        hangButton = false;
 
         setPistonExtended(drawbridgeSol, drawbridgeButton);
 
