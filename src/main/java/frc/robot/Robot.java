@@ -232,9 +232,6 @@ public class Robot extends TimedRobot {
 
     static final int PCM_RATCHET = 2;
 
-    boolean extended = false; // TODO figure out what this is for and comment it
-    boolean retracted = true; // TODO figure out what this is for and comment it
-
     Compressor compressor = new Compressor(1);
 
     DoubleSolenoid drawbridgeSol = new DoubleSolenoid(1, PCM_DRAWBRIDGE_IN, PCM_DRAWBRIDGE_OUT);
