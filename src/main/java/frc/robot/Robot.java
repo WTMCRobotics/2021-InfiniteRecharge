@@ -502,6 +502,8 @@ public class Robot extends TimedRobot {
                         break;
                 }
                 break;
+            default:
+                throw new Error("no auton mode selected");
         }
     }
 
