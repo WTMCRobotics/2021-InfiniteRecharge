@@ -756,6 +756,8 @@ public class Robot extends TimedRobot {
                 ((DoubleSolenoid) solenoid).set(DoubleSolenoid.Value.kReverse);
             }
 
+        } else {
+            throw new Error(solenoid.getClass().getSimpleName() + " is not a Solenoid or a DoubleSolenoid");
         }
     }
 
