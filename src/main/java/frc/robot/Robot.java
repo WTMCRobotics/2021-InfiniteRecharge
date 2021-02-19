@@ -692,7 +692,7 @@ public class Robot extends TimedRobot {
     /**
      * Turns robot a number of degrees. Should be called every tick until it returns true.
      * 
-     * @param degrees the number of degres to turn
+     * @param degrees the number of degrees to turn
      * 
      * @return true if done
      */
