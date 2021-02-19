@@ -723,6 +723,8 @@ public class Robot extends TimedRobot {
         }
     }
 
+    // TODO test if removing this function breaks anything because it doesn't seam to be called ever
+    // TODO also test if putting this in disabled pereotic will let us run the compressor without enableing
     void UpdateCompressor() {
         // if not enough pressure
         if (!compressor.getPressureSwitchValue()) {
