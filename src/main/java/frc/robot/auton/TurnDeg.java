@@ -15,7 +15,8 @@ public class TurnDeg extends Instruction {
 
 	@Override
 	public boolean doit(Robot robot) {
-		if (robot.turnDegs(degrees) && robot.resetEncoders()) {
+		boolean done = robot.turnDegs(degrees);
+		if (done && robot.resetEncoders()) {
 			robot.gyro.reset();
 			System.out.println("done");
 			return true;

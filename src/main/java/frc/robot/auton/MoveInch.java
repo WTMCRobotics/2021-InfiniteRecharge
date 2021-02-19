@@ -16,7 +16,12 @@ public class MoveInch extends Instruction {
 
 	@Override
 	public boolean doit(Robot robot) {
-		return robot.moveInches(inches) && robot.resetEncoders();
+		boolean done = robot.moveInches(inches);
+		if (done) {
+			return robot.resetEncoders();
+		} else {
+			return false;
+		}
 	}
 
 }
