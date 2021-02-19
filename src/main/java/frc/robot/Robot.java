@@ -710,9 +710,11 @@ public class Robot extends TimedRobot {
         } else if (output < 0) {
             output -= 0.10;
         }
-        if (Math.abs(gyro.getAngle() - degrees) < angleMarginOfError
-                && Math.abs(rightMaster.getSelectedSensorVelocity()) < 1024 / 4
-                && Math.abs(leftMaster.getSelectedSensorVelocity()) < 1024 / 4) {
+        if (
+            Math.abs(gyro.getAngle() - degrees) < angleMarginOfError
+            && Math.abs(rightMaster.getSelectedSensorVelocity()) < 1024 / 4
+            && Math.abs(leftMaster.getSelectedSensorVelocity()) < 1024 / 4
+        ) {
             rightMaster.set(ControlMode.PercentOutput, 0);
             leftMaster.set(ControlMode.PercentOutput, 0);
             return true;
