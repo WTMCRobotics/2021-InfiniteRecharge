@@ -474,7 +474,7 @@ public class Robot extends TimedRobot {
                         autonInstructions.add(new MoveInch(60 * Math.sqrt(2))); 
                         autonInstructions.add(new TurnDeg(45)); // e8
                         autonInstructions.add(new MoveInch(120));
-                        autonInstructions.add(new TurnDeg(45)); // e4\
+                        autonInstructions.add(new TurnDeg(45)); // e4
                         autonInstructions.add(new MoveInch(60 * Math.sqrt(2))); 
                         break;
                     case BOUNCE:
