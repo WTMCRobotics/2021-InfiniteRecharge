@@ -478,25 +478,25 @@ public class Robot extends TimedRobot {
                         autonInstructions.add(new MoveInch(60 * Math.sqrt(2))); 
                         break;
                     case BOUNCE:
-                        autonInstructions.add(new MoveInch(30 + this.robotLength / 2));
+                        autonInstructions.add(new MoveInch(30 + Robot.robotLength / 2));
                         autonInstructions.add(new TurnDeg(-90)); // c3
-                        autonInstructions.add(new MoveInch(60 - this.robotLength / 2));
+                        autonInstructions.add(new MoveInch(60 - Robot.robotLength / 2));
                         //a3
-                        autonInstructions.add(new MoveInch(-60 + this.robotLength / 2)); 
+                        autonInstructions.add(new MoveInch(-60 + Robot.robotLength / 2)); 
                         autonInstructions.add(new TurnDeg(-45)); // c3
                         autonInstructions.add(new MoveInch(-60 * Math.sqrt(2)));
                         autonInstructions.add(new TurnDeg(90)); // e5
                         autonInstructions.add(new MoveInch(30 * Math.sqrt(2)));
                         autonInstructions.add(new TurnDeg(-45)); // d6
-                        autonInstructions.add(new MoveInch(90 - this.robotLength / 2));
+                        autonInstructions.add(new MoveInch(90 - Robot.robotLength / 2));
                         // a6
-                        autonInstructions.add(new MoveInch(-120 + this.robotLength / 2));
+                        autonInstructions.add(new MoveInch(-120 + Robot.robotLength / 2));
                         autonInstructions.add(new TurnDeg(90)); // e6
                         autonInstructions.add(new MoveInch(90));
                         autonInstructions.add(new TurnDeg(-90)); // e9
-                        autonInstructions.add(new MoveInch(120 - this.robotLength / 2));
+                        autonInstructions.add(new MoveInch(120 - Robot.robotLength / 2));
                         // a9
-                        autonInstructions.add(new MoveInch(-30 + this.robotLength / 2));
+                        autonInstructions.add(new MoveInch(-30 + Robot.robotLength / 2));
                         autonInstructions.add(new TurnDeg(-45)); // b9
                         autonInstructions.add(new MoveInch(-60));
                         break;
