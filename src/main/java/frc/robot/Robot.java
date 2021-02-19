@@ -72,23 +72,30 @@ public class Robot extends TimedRobot {
     // ##########################################
 
     // DIO IDs
-    static final int ROBOT_SENSOR_ID = 9; // this should be pulled low on the 2016 Practice Robot
-    static final int HANG_SET_SENSOR_ID = 0; // sensor for when the winch is extended
-    static final int HANG_DEFAULT_SENSOR_ID = 1; // sensor for when the winch is retracted
-    static final int INTAKE_SENSOR_ID = 2; // sensor for when a ball is waiting to be popped up
-    static final int INTAKE_COUNTER_SENSOR_ID = 3; // sensor for counting balls
+
+    /** this should be pulled low on the 2016 Practice Robot */
+    static final int ROBOT_SENSOR_ID = 9;
+    /** sensor for when the winch is extended */
+    static final int HANG_SET_SENSOR_ID = 0;
+    /** sensor for when the winch is retracted */
+    static final int HANG_DEFAULT_SENSOR_ID = 1;
+    /** sensor for when a ball is waiting to be popped up */
+    static final int INTAKE_SENSOR_ID = 2;
+    /** sensor for counting balls */
+    static final int INTAKE_COUNTER_SENSOR_ID = 3;
 
     // Binary Sensors
-    static final DigitalInput ROBOT_SENSOR = new DigitalInput(ROBOT_SENSOR_ID); // this should be pulled low on the 2016
-                                                                                // Practice
-    // Robot
-    static final DigitalInput HANG_SET_SENSOR = new DigitalInput(HANG_SET_SENSOR_ID); // sensor for when the winch is
-                                                                                      // extended
-    static final DigitalInput HANG_DEFAULT_SENSOR = new DigitalInput(HANG_DEFAULT_SENSOR_ID); // sensor for when the
-                                                                                              // winch is retracted
-    static final DigitalInput INTAKE_SENSOR = new DigitalInput(INTAKE_SENSOR_ID); // sensor for when a ball is waiting
-                                                                                  // to be popped up
-    static final DigitalInput POPPER_SENSOR = new DigitalInput(INTAKE_COUNTER_SENSOR_ID); // sensor for counting balls
+
+    /** this should be pulled low on the 2016 Practice Robot */
+    static final DigitalInput ROBOT_SENSOR = new DigitalInput(ROBOT_SENSOR_ID);
+    /** sensor for when the winch is extended */ 
+    static final DigitalInput HANG_SET_SENSOR = new DigitalInput(HANG_SET_SENSOR_ID);
+    /** sensor for when the winch is retracted */
+    static final DigitalInput HANG_DEFAULT_SENSOR = new DigitalInput(HANG_DEFAULT_SENSOR_ID);
+    /** sensor for when a ball is waiting to be popped up */
+    static final DigitalInput INTAKE_SENSOR = new DigitalInput(INTAKE_SENSOR_ID);
+    /** sensor for counting balls */
+    static final DigitalInput POPPER_SENSOR = new DigitalInput(INTAKE_COUNTER_SENSOR_ID);
 
     // ##########################################
     // talon related constants and variables
@@ -112,15 +119,17 @@ public class Robot extends TimedRobot {
     TalonSRX intake = new TalonSRX(INTAKE_ID);
     TalonSRX popper = new TalonSRX(POPPER_ID);
 
-    /**
-     * the number of ticks in a full rotation
-     */
+    /** the number of ticks in a full rotation */
     static final int encoderRotation = 4096;
 
     // talon config
-    public static final int SLOT_IDX = 0; // Which PID slot to pull gains from
-    public static final int PID_LOOP_IDX = 0; // Which PID loop to pull gains from
-    public static final int TIMEOUT_MS = 30; // amount of time in ms to wait for confirmation
+
+    /** Which PID slot to pull gains from */
+    public static final int SLOT_IDX = 0;
+    /** Which PID loop to pull gains from */
+    public static final int PID_LOOP_IDX = 0;
+    /** amount of time in ms to wait for confirmation */
+    public static final int TIMEOUT_MS = 30;
 
     // ##########################################
     // drivetrain and pid related constants and variables
@@ -131,8 +140,7 @@ public class Robot extends TimedRobot {
     static final Gains PRACTICE_ROTATION_GAINS = new Gains(0.004, 0.003, 0.001, 0.0, 0, 0.0);
     static final Gains COMPETITION_ROTATION_GAINS = new Gains(0.04, 0.003, 0.001, 0.0, 0, 0.0);
     static Gains rotationGains;
-    static final Constraints ROTATIONAL_GAIN_CONSTRAINTS = new Constraints(Double.POSITIVE_INFINITY, 20); // m/s and
-                                                                                                          // m/s/s
+    static final Constraints ROTATIONAL_GAIN_CONSTRAINTS = new Constraints(Double.POSITIVE_INFINITY, 20); // m/s and m/s^2
     ProfiledPIDController rotationPID;
 
     /** The maximum distance from the destination considered close enough */
@@ -175,7 +183,7 @@ public class Robot extends TimedRobot {
     int popperOutTime = 0;
 
     int popperCounterTime; // the number of cycles that the counter sensor has been interrupted for
-    static final int INTAKE_COUNTER_COUNT_TIME = 3; // the number of cycles that a ball interruptes the sensor for when passing
+    static final int INTAKE_COUNTER_COUNT_TIME = 3; // the number of cycles that a ball interrupts the sensor for when passing
     int intakeTime; // the number of cycles that the counter sensor has bean interrupted for
     static final int POPPER_COUNTER_JAM_TIME = 20; // the number of cycles that constitutes a popper jam
     int ballsStored = 0; // the number of balls in the robot
@@ -192,7 +200,6 @@ public class Robot extends TimedRobot {
     // ##########################################
 
     XboxController xboxController = new XboxController(0); // driver
-    XboxController gHeroController = new XboxController(1); // co-driver
     double leftjoyY; // y-axis of the left joystick on the driver's controller
     double rightjoyY; // y-axis of the right joystick on the driver's controller
     double leftjoyX; // x-axis of the left joystick on the driver's controller
@@ -200,6 +207,7 @@ public class Robot extends TimedRobot {
 
     static final int START = 7; // the mapping of the start button on a xbox controller
     static final int SELECT = 8; // the mapping of the select button on a xbox controller
+    static final int A_BUTTON = 1; // the mapping of the A button on a xbox controller
     static final int R_STICK = 10; // the mapping of the right shoulder on a xbox controller
     static final int L_STICK = 9; // the mapping of the left shoulder on a xbox controller
     static final int R_SHOULDER = 6; // the mapping of the right shoulder on a xbox controller
@@ -223,9 +231,6 @@ public class Robot extends TimedRobot {
     static final int PCM_DRAWBRIDGE_OUT = 0;
 
     static final int PCM_RATCHET = 2;
-
-    boolean extended = false; // TODO figure out what this is for and comment it
-    boolean retracted = true; // TODO figure out what this is for and comment it
 
     Compressor compressor = new Compressor(1);
 
@@ -364,7 +369,9 @@ public class Robot extends TimedRobot {
     public void disabledPeriodic() {
         try {
             selectedChallenge = CHALLENGE_CHOOSER.getSelected();
-            selectedPath = PATH_CHOOSER.getSelected();
+            if (selectedChallenge == Challenge.AUTONAV) {
+                selectedPath = PATH_CHOOSER.getSelected();
+            }
 
             // this line will run only if the other lines didn't crash
             SmartDashboard.putBoolean("Ready", true);
@@ -459,7 +466,7 @@ public class Robot extends TimedRobot {
 
                         break;
                     case SLALOM:
-                        autonInstructions.add(new MoveInch(this.robotLength / 2));
+                        autonInstructions.add(new MoveInch(Robot.robotLength / 2));
                         autonInstructions.add(new TurnDeg(-45)); // e2
                         autonInstructions.add(new MoveInch(60 * Math.sqrt(2)));
                         autonInstructions.add(new TurnDeg(45)); // c4
@@ -478,30 +485,32 @@ public class Robot extends TimedRobot {
                         autonInstructions.add(new MoveInch(60 * Math.sqrt(2))); 
                         break;
                     case BOUNCE:
-                        autonInstructions.add(new MoveInch(30 + this.robotLength / 2));
+                        autonInstructions.add(new MoveInch(30 + Robot.robotLength / 2));
                         autonInstructions.add(new TurnDeg(-90)); // c3
-                        autonInstructions.add(new MoveInch(60 - this.robotLength / 2));
+                        autonInstructions.add(new MoveInch(60 - Robot.robotLength / 2));
                         //a3
-                        autonInstructions.add(new MoveInch(-60 + this.robotLength / 2)); 
+                        autonInstructions.add(new MoveInch(-60 + Robot.robotLength / 2)); 
                         autonInstructions.add(new TurnDeg(-45)); // c3
                         autonInstructions.add(new MoveInch(-60 * Math.sqrt(2)));
                         autonInstructions.add(new TurnDeg(90)); // e5
                         autonInstructions.add(new MoveInch(30 * Math.sqrt(2)));
                         autonInstructions.add(new TurnDeg(-45)); // d6
-                        autonInstructions.add(new MoveInch(90 - this.robotLength / 2));
+                        autonInstructions.add(new MoveInch(90 - Robot.robotLength / 2));
                         // a6
-                        autonInstructions.add(new MoveInch(-120 + this.robotLength / 2));
+                        autonInstructions.add(new MoveInch(-120 + Robot.robotLength / 2));
                         autonInstructions.add(new TurnDeg(90)); // e6
                         autonInstructions.add(new MoveInch(90));
                         autonInstructions.add(new TurnDeg(-90)); // e9
-                        autonInstructions.add(new MoveInch(120 - this.robotLength / 2));
+                        autonInstructions.add(new MoveInch(120 - Robot.robotLength / 2));
                         // a9
-                        autonInstructions.add(new MoveInch(-30 + this.robotLength / 2));
+                        autonInstructions.add(new MoveInch(-30 + Robot.robotLength / 2));
                         autonInstructions.add(new TurnDeg(-45)); // b9
                         autonInstructions.add(new MoveInch(-60));
                         break;
                 }
                 break;
+            default:
+                throw new Error("no auton mode selected");
         }
     }
 
@@ -542,12 +551,12 @@ public class Robot extends TimedRobot {
         rightjoyX = xboxController.getX(GenericHID.Hand.kRight);
         arcadeButton = xboxController.getRawButton(L_STICK);
         tankButton = xboxController.getRawButton(R_STICK);
-        drawbridgeButton = 1 == gHeroController.getX(GenericHID.Hand.kRight);
+        drawbridgeButton = xboxController.getRawButton(A_BUTTON);
         intakeInButton = 0.1 < xboxController.getTriggerAxis(GenericHID.Hand.kLeft);
         intakeOutButton = 0.1 < xboxController.getTriggerAxis(GenericHID.Hand.kRight);
         popperInButton = xboxController.getRawButton(L_SHOULDER);
         popperOutButton = xboxController.getRawButton(R_SHOULDER);
-        hangButton = gHeroController.getName().isEmpty() ? false : 0.5 > gHeroController.getTriggerAxis(GenericHID.Hand.kLeft);
+        hangButton = false;
 
         setPistonExtended(drawbridgeSol, drawbridgeButton);
 
@@ -669,6 +678,13 @@ public class Robot extends TimedRobot {
         return encoderRotation * inches / circumference;
     }
 
+    /**
+     * Turns robot a number of degrees. Should be called every tick until it returns true.
+     * 
+     * @param radians the number of radians to turn
+     * 
+     * @return true if done
+     */
     boolean turnRads(double radians) {
         return turnDegs(radians * 180 / Math.PI);
     }
@@ -676,7 +692,7 @@ public class Robot extends TimedRobot {
     /**
      * Turns robot a number of degrees. Should be called every tick until it returns true.
      * 
-     * @param degrees the number of degres to turn
+     * @param degrees the number of degrees to turn
      * 
      * @return true if done
      */
@@ -694,9 +710,11 @@ public class Robot extends TimedRobot {
         } else if (output < 0) {
             output -= 0.10;
         }
-        if (Math.abs(gyro.getAngle() - degrees) < angleMarginOfError
-                && Math.abs(rightMaster.getSelectedSensorVelocity()) < 1024 / 4
-                && Math.abs(leftMaster.getSelectedSensorVelocity()) < 1024 / 4) {
+        if (
+            Math.abs(gyro.getAngle() - degrees) < angleMarginOfError
+            && Math.abs(rightMaster.getSelectedSensorVelocity()) < 1024 / 4
+            && Math.abs(leftMaster.getSelectedSensorVelocity()) < 1024 / 4
+        ) {
             rightMaster.set(ControlMode.PercentOutput, 0);
             leftMaster.set(ControlMode.PercentOutput, 0);
             return true;
@@ -707,6 +725,8 @@ public class Robot extends TimedRobot {
         }
     }
 
+    // TODO test if removing this function breaks anything because it doesn't seam to be called ever
+    // TODO also test if putting this in disabled pereotic will let us run the compressor without enableing
     void UpdateCompressor() {
         // if not enough pressure
         if (!compressor.getPressureSwitchValue()) {
@@ -736,11 +756,13 @@ public class Robot extends TimedRobot {
                 ((DoubleSolenoid) solenoid).set(DoubleSolenoid.Value.kReverse);
             }
 
+        } else {
+            throw new Error(solenoid.getClass().getSimpleName() + " is not a Solenoid or a DoubleSolenoid");
         }
     }
 
-    // this code is called from auton and teleop periodic and uses sensors to automatically handel the popper
-    void handlePopper(boolean shoudSetPopper) {
+    // this code is called from auton and teleop periodic and uses sensors to automatically handle the popper
+    void handlePopper(boolean shouldSetPopper) {
         // if a ball is ready to be popped
         if (!INTAKE_SENSOR.get()) {
             popperInTime = POPPER_TIME_IN;
@@ -767,7 +789,7 @@ public class Robot extends TimedRobot {
             popperCounterTime = 0;
         }
 
-        if (shoudSetPopper) {
+        if (shouldSetPopper) {
             if (popperOutTime-- > 0) {
                 popper.set(ControlMode.PercentOutput, POPPER_SPEED_OUT);
             } else if (popperInTime-- > 0) {
