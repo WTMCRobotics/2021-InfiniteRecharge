@@ -466,7 +466,7 @@ public class Robot extends TimedRobot {
 
                         break;
                     case SLALOM:
-                        autonInstructions.add(new MoveInch(this.robotLength / 2));
+                        autonInstructions.add(new MoveInch(Robot.robotLength / 2));
                         autonInstructions.add(new TurnDeg(-45)); // e2
                         autonInstructions.add(new MoveInch(60 * Math.sqrt(2)));
                         autonInstructions.add(new TurnDeg(45)); // c4
