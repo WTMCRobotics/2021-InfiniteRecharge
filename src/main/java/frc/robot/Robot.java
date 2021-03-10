@@ -63,9 +63,9 @@ public class Robot extends TimedRobot {
     ArrayList<Instruction> autonInstructions = new ArrayList<Instruction>();
 
     /** the width of the robot in inches */
-    public static final float robotWidth = 36;
+    public static final float robotWidth = 32;
     /** the length of the robot in inches */
-    public static final float robotLength = 40;
+    public static final float robotLength = 38;
 
     // ##########################################
     // Digital IO related constants
