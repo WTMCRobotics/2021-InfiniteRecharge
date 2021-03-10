@@ -639,6 +639,9 @@ public class Robot extends TimedRobot {
         rotationGains.P = SmartDashboard.getNumber("rotationProportion", rotationGains.P);
         rotationGains.I = SmartDashboard.getNumber("rotationIntegral", rotationGains.I);
         rotationGains.D = SmartDashboard.getNumber("rotationDerivative", rotationGains.D);
+
+        initializeMotionMagicMaster(rightMaster);
+        initializeMotionMagicMaster(leftMaster);
     }
 
     public void testInit() {
