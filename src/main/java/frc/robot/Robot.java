@@ -166,6 +166,9 @@ public class Robot extends TimedRobot {
     // intake and popper related constants and variables
     // ##########################################
 
+    /* the maximum number of balls that can be held */
+    static final int MAX_BALLS = 3;
+
     // the speed of the intake motor. Accepts values between 1 and -1.
     static final double INTAKE_SPEED_IN = 0.25;
     static final double INTAKE_SPEED_OUT = -0.25;
@@ -525,14 +528,22 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousPeriodic() {
-        while (!autonInstructions.isEmpty() && autonInstructions.get(0).doit(this)) {
-            autonInstructions.remove(0);
-        }
-        handlePopper(true);
-        if (ballsStored < 5) {
-            intake.set(ControlMode.PercentOutput, INTAKE_SPEED_IN);
-        } else {
-            intake.set(ControlMode.PercentOutput, INTAKE_SPEED_OUT);
+        switch (selectedChallenge) {
+            case GALACTIC_SEARCH:
+                handlePopper(true);
+                if (ballsStored < MAX_BALLS) {
+                    intake.set(ControlMode.PercentOutput, INTAKE_SPEED_IN);
+                } else {
+                    intake.set(ControlMode.PercentOutput, INTAKE_SPEED_OUT);
+                }
+
+                break;
+
+            case AUTONAV:
+            
+                while (!autonInstructions.isEmpty() && autonInstructions.get(0).doit(this)) {
+                    autonInstructions.remove(0);
+                }
         }
     }
 
@@ -587,7 +598,7 @@ public class Robot extends TimedRobot {
             rightMaster.set(ControlMode.PercentOutput, rightjoyY);
         }
 
-        if (intakeInButton && ballsStored >= 5) {
+        if (intakeInButton && ballsStored >= MAX_BALLS) {
             xboxController.setRumble(RumbleType.kLeftRumble, 1.0);
             xboxController.setRumble(RumbleType.kRightRumble, 1.0);
         } else {
@@ -598,7 +609,7 @@ public class Robot extends TimedRobot {
         // this code handles intake
         if (intakeInButton) {
             intake.set(ControlMode.PercentOutput, INTAKE_SPEED_IN);
-        } else if (intakeOutButton || ballsStored >= 5) {
+        } else if (intakeOutButton || ballsStored >= MAX_BALLS) {
             intake.set(ControlMode.PercentOutput, INTAKE_SPEED_OUT);
         } else {
             intake.set(ControlMode.PercentOutput, 0);
