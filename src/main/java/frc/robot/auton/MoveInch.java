@@ -7,8 +7,7 @@ public class MoveInch extends Instruction {
 	double inches;
 
 	/**
-	 * @param inches the number of inches to move forward (negitve value to go
-	 *               backward)
+	 * @param inches the number of inches to move forward (negative value to go backward)
 	 */
 	public MoveInch(double inches) {
 		this.inches = inches;
