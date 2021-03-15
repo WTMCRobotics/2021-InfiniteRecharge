@@ -8,6 +8,7 @@
 package frc.robot;
 
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -35,6 +36,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.auton.*;
+import io.github.pseudoresonance.pixy2api.Pixy2;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -240,6 +242,9 @@ public class Robot extends TimedRobot {
     DoubleSolenoid drawbridgeSol = new DoubleSolenoid(1, PCM_DRAWBRIDGE_IN, PCM_DRAWBRIDGE_OUT);
     Solenoid hangSol = new Solenoid(1, PCM_RATCHET);
 
+    Pixy2 pixy;
+    USBPixyLink pixyLink;
+
     /**
      * This function is run when the robot is first started up and should be used
      * for any initialization code.
@@ -288,6 +293,10 @@ public class Robot extends TimedRobot {
         rightSlave.set(ControlMode.Follower, RIGHT_MASTER_ID);
         leftSlave.set(ControlMode.Follower, LEFT_MASTER_ID);
         gyro.reset();
+
+        pixyLink = new USBPixyLink();
+        pixy = Pixy2.createInstance(pixyLink);
+        pixy.init();
     }
 
     public void initializeTalon(TalonSRX talon, NeutralMode neutralMode, boolean inverted) {
@@ -370,6 +379,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledPeriodic() {
+        System.out.println(pixy.getFPS());
         try {
             selectedChallenge = CHALLENGE_CHOOSER.getSelected();
             if (selectedChallenge == null) {
@@ -675,12 +685,19 @@ public class Robot extends TimedRobot {
         inches = -inches;
         leftMaster.set(ControlMode.MotionMagic, inchesToTicks(inches));
         rightMaster.set(ControlMode.MotionMagic, inchesToTicks(inches));
+        System.out.println(
+            (Math.abs(leftMaster.getSelectedSensorPosition() - inchesToTicks(inches)) - inchesToTicks(distanceMarginOfError))
+            + " " + (Math.abs(leftMaster.getActiveTrajectoryVelocity()) < inchesToTicks(1) * 10)
+            + " " + (Math.abs(rightMaster.getSelectedSensorPosition() - inchesToTicks(inches)) - inchesToTicks(distanceMarginOfError))
+            + " " + (Math.abs(rightMaster.getActiveTrajectoryVelocity()) < inchesToTicks(1) * 10)
+        );
         if (
             Math.abs(leftMaster.getSelectedSensorPosition() - inchesToTicks(inches)) < inchesToTicks(distanceMarginOfError)
             && Math.abs(leftMaster.getActiveTrajectoryVelocity()) < inchesToTicks(1) * 10
             && Math.abs(rightMaster.getSelectedSensorPosition() - inchesToTicks(inches)) < inchesToTicks(distanceMarginOfError)
             && Math.abs(rightMaster.getActiveTrajectoryVelocity()) < inchesToTicks(1) * 10
         ) {
+            System.out.println("done");
             return true;
         } else {
             return false;
