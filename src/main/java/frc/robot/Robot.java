@@ -36,7 +36,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.auton.*;
-import io.github.pseudoresonance.pixy2api.Pixy2;
+import io.github.pseudoresonance.pixy2api.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -244,6 +244,10 @@ public class Robot extends TimedRobot {
 
     Pixy2 pixy;
     USBPixyLink pixyLink;
+    GalacticSearchMode galacticSearch;
+    GalacticSearchMode[] galacticSearchResults = new GalacticSearchMode[20];
+    int galacticSearchNext = 0;
+    static final String[] galacticSearchNames = {"Red A", "Blue A", "Red B", "Blue B"};
 
     /**
      * This function is run when the robot is first started up and should be used
@@ -379,7 +383,6 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledPeriodic() {
-        System.out.println(pixy.getFPS());
         try {
             selectedChallenge = CHALLENGE_CHOOSER.getSelected();
             if (selectedChallenge == null) {
@@ -397,6 +400,36 @@ public class Robot extends TimedRobot {
         } catch (NullPointerException e) {
             DriverStation.reportError("auton path not configured!", true);
             SmartDashboard.putBoolean("Ready", false);
+        }
+
+        Pixy2CCC ccc = pixy.getCCC();
+        ccc.getBlocks();
+        ArrayList<Pixy2CCC.Block> blocks = ccc.getBlockCache();
+        GalacticSearchMode mode;
+        if (blocks.size() > 0) {
+            Pixy2CCC.Block largest = null;
+            int area_max = 0;
+            for (Pixy2CCC.Block b : blocks) {
+                int area = b.getWidth() * b.getHeight();
+                if (area > area_max) {
+                    largest = b;
+                    area_max = area;
+                }
+            }
+            if (area_max < 250) mode = GalacticSearchMode.BlueB;
+            else if (Math.abs(largest.getX() + (largest.getWidth() / 2) - (pixy.getFrameWidth() / 2)) < 45)
+                mode = GalacticSearchMode.RedB;
+            else mode = GalacticSearchMode.RedA;
+        } else mode = GalacticSearchMode.BlueA;
+        galacticSearchResults[galacticSearchNext++] = mode;
+        if (galacticSearchNext >= 20) {
+            int[] values = {0, 0, 0, 0};
+            for (int i = 0; i < 20; i++) values[galacticSearchResults[i].ordinal()]++;
+            int max = 0, maxn = 0;
+            for (int i = 0; i < 4; i++) if (values[i] > max) {max = values[i]; maxn = i;}
+            galacticSearch = GalacticSearchMode.values()[maxn];
+            galacticSearchNext = 0;
+            SmartDashboard.putString("GalacticSearch", galacticSearchNames[maxn]);
         }
     }
 
@@ -477,7 +510,59 @@ public class Robot extends TimedRobot {
          */
         switch (selectedChallenge) {
             case GALACTIC_SEARCH:
-
+                switch (galacticSearch) {
+                case BlueA:
+                    // Blue A: (B1)
+                    autonInstructions.add(new TurnDeg(-30.964)); // - Turn 30.964 deg
+                    autonInstructions.add(new MoveInch(14.577 * 12)); // - Move 14.577 ft
+                    // - Collect 1
+                    autonInstructions.add(new TurnDeg(102.529)); // - Turn -102.529 deg
+                    autonInstructions.add(new MoveInch(7.906 * 12)); // - Move 7.906 ft
+                    // - Collect 1
+                    autonInstructions.add(new TurnDeg(-135)); // - Turn 135 deg
+                    autonInstructions.add(new MoveInch(12 * 12)); // - Move >11.180 ft (collect 1)
+                    break;
+                case BlueB:
+                    // Blue B: (D1)
+                    autonInstructions.add(new MoveInch(12.5 * 12));
+                    // - Collect 1
+                    autonInstructions.add(new TurnDeg(-45));
+                    autonInstructions.add(new MoveInch(7.071 * 12));
+                    // - Collect 1
+                    autonInstructions.add(new TurnDeg(-90));
+                    autonInstructions.add(new MoveInch(7.071 * 12));
+                    // - Collect 1
+                    autonInstructions.add(new TurnDeg(45));
+                    autonInstructions.add(new MoveInch(5 * 12));
+                    break;
+                case RedA:
+                    // Red A: (B1)
+                    autonInstructions.add(new TurnDeg(-26.565));
+                    autonInstructions.add(new MoveInch(11.180 * 12));//(collect 1)
+                    // - Collect 1
+                    autonInstructions.add(new TurnDeg(81.870));
+                    autonInstructions.add(new MoveInch(7.906 * 12));
+                    // - Collect 1
+                    autonInstructions.add(new TurnDeg(-71.565));
+                    autonInstructions.add(new MoveInch(15 * 12));
+                    break;
+                case RedB:
+                    // Red B: (B1)
+                    autonInstructions.add(new MoveInch(5 * 12));
+                    // - Collect 1
+                    autonInstructions.add(new TurnDeg(-45));
+                    autonInstructions.add(new MoveInch(7.071 * 12));
+                    // - Collect 1
+                    autonInstructions.add(new TurnDeg(90));
+                    autonInstructions.add(new MoveInch(7.071 * 12));
+                    // - Collect 1
+                    autonInstructions.add(new TurnDeg(-45));
+                    autonInstructions.add(new MoveInch(12.5 * 12));
+                    break;
+                default:
+                    throw new Error("invalid value of \"galacticSearch\"");
+                }
+                
                 break;
             case AUTONAV:
                 switch (selectedPath) {
@@ -852,4 +937,15 @@ enum Challenge {
 
 enum Path {
     BARREL_RACING, SLALOM, BOUNCE
+}
+
+enum GalacticSearchMode {
+    RedA(0), BlueA(1), RedB(2), BlueB(3);
+    private final int value;
+    private GalacticSearchMode(int value) {
+        this.value = value;
+    }
+    public int getValue() {
+        return value;
+    }
 }
