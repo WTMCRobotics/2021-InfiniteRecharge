@@ -482,7 +482,25 @@ public class Robot extends TimedRobot {
             case AUTONAV:
                 switch (selectedPath) {
                     case BARREL_RACING:
-
+                        autonInstructions.add(new MoveInch(135+ Robot.robotLength / 2));
+                        autonInstructions.add(new TurnDeg(60)); // c6.5
+                        autonInstructions.add(new MoveInch(-90));
+                        autonInstructions.add(new TurnDeg(60)); // e5
+                        autonInstructions.add(new MoveInch(90));
+                        autonInstructions.add(new TurnDeg(60)); // c3.5
+                        autonInstructions.add(new MoveInch(-165));
+                        autonInstructions.add(new TurnDeg(-90)); // c9
+                        autonInstructions.add(new MoveInch(60));
+                        autonInstructions.add(new TurnDeg(90)); // a9
+                        autonInstructions.add(new MoveInch(90));
+                        autonInstructions.add(new TurnDeg(-45)); // a6
+                        autonInstructions.add(new MoveInch(120 * Math.sqrt(2)));
+                        autonInstructions.add(new TurnDeg(45)); // e6
+                        autonInstructions.add(new MoveInch(-30));
+                        autonInstructions.add(new TurnDeg(-90)); // e11
+                        autonInstructions.add(new MoveInch(60));
+                        autonInstructions.add(new TurnDeg(90)); // c11
+                        autonInstructions.add(new MoveInch(270));
                         break;
                     case SLALOM:
                         autonInstructions.add(new MoveInch(Robot.robotLength / 2));
