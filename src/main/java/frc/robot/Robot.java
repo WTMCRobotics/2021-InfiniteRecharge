@@ -243,7 +243,6 @@ public class Robot extends TimedRobot {
     Solenoid hangSol = new Solenoid(1, PCM_RATCHET);
 
     Pixy2 pixy;
-    USBPixyLink pixyLink;
     GalacticSearchMode galacticSearch;
     GalacticSearchMode[] galacticSearchResults = new GalacticSearchMode[20];
     int galacticSearchNext = 0;
@@ -298,8 +297,6 @@ public class Robot extends TimedRobot {
         leftSlave.set(ControlMode.Follower, LEFT_MASTER_ID);
         gyro.reset();
 
-        // pixyLink = new USBPixyLink();
-        
         pixy = Pixy2.createInstance(new SPILink());
         pixy.init();
     }
