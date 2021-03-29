@@ -450,64 +450,8 @@ public class Robot extends TimedRobot {
         autonInstructions.clear();
         resetEncoders();
         gyro.reset();
-        rotationPID = new ProfiledPIDController(rotationGains.P, rotationGains.I, rotationGains.D,
-                ROTATIONAL_GAIN_CONSTRAINTS);
-        /*
-         * if (goDirectlyPosSelected) { if (startingPosSelected > 0) { // this checks
-         * that the staring position has bean set switch (startingPosSelected) { case
-         * TRENCH_AUTON_POS: // start with front bumper on the initiation line facing
-         * our trench and start // loaded with only two balls autonInstructions.add(new
-         * MoveInch(133)); autonInstructions.add(new MoveInch(-133));
-         * autonInstructions.add(new TurnDeg(90)); autonInstructions.add(new
-         * MoveInch(67.875));// 67.875 inches might be the wrong distance from // the
-         * middle of the trench run (the one closest to // the target zone) to the
-         * middle of the target zone autonInstructions.add(new TurnDeg(90));
-         * autonInstructions.add(new MoveInch(120)); case TARGET_ZONE_AUTON_POS: //
-         * start with back bumper on initiation line facing towards the middle of the //
-         * target zone autonInstructions.add(new MoveInch(-38));
-         * autonInstructions.add(new MoveInch(120)); case LEFT_AUTON_POS: // start with
-         * back bumper on initiation line, middle of robot lined up with side // of PS2
-         * furthest from target zone facing away from end of arena closest to it
-         * autonInstructions.add(new MoveInch(10)); autonInstructions.add(new
-         * TurnDeg(-90)); autonInstructions.add(new MoveInch(108));
-         * autonInstructions.add(new TurnDeg(-90)); autonInstructions.add(new
-         * MoveInch(130)); break; default: // this case shouldn't happen because of the
-         * if statement above break; } autonInstructions.add(new StartPushing());
-         * autonInstructions.add(new SetPistonExtended(drawbridgeSol, true));
-         * autonInstructions.add(new WaitMs(3000)); autonInstructions.add(new
-         * SetPistonExtended(drawbridgeSol, false)); autonInstructions.add(new
-         * MoveInch(-120)); switch (targetPickupLocation) { case RIGHT_RENDEZVOUS:
-         * autonInstructions.add(new MoveInch(-308.625)); autonInstructions.add(new
-         * TurnDeg(-22.5)); autonInstructions.add(new MoveInch(60)); // picking up 2
-         * balls here autonInstructions.add(new MoveInch(-60));
-         * autonInstructions.add(new TurnDeg(22.5)); autonInstructions.add(new
-         * MoveInch(308.625)); autonInstructions.add(new MoveInch(126)); // could put
-         * alternate code here making robot pick up other 3 balls break; case
-         * LEFT_RENDEZVOUS: autonInstructions.add(new TurnDeg(90)); //
-         * autonInstructions.add(new MoveInch(y)); autonInstructions.add(new
-         * TurnDeg(-90)); autonInstructions.add(new MoveInch(276));
-         * autonInstructions.add(new TurnDeg(22.5)); autonInstructions.add(new
-         * MoveInch(60)); // picking up 3 balls here autonInstructions.add(new
-         * MoveInch(-60)); autonInstructions.add(new TurnDeg(-22.5));
-         * autonInstructions.add(new MoveInch(-270)); autonInstructions.add(new
-         * TurnDeg(-90)); // autonInstructions.add(new MoveInch(y));
-         * autonInstructions.add(new TurnDeg(-90)); autonInstructions.add(new
-         * MoveInch(120)); // could put alternate code here making robot pick up other 2
-         * balls break; case TRENCH: autonInstructions.add(new TurnDeg(-90));
-         * autonInstructions.add(new MoveInch(67.875)); autonInstructions.add(new
-         * TurnDeg(90)); autonInstructions.add(new MoveInch(114)); // picking up 3 balls
-         * here autonInstructions.add(new MoveInch(-114)); autonInstructions.add(new
-         * TurnDeg(90)); autonInstructions.add(new MoveInch(51.75));
-         * autonInstructions.add(new TurnDeg(90)); autonInstructions.add(new
-         * MoveInch(126)); break; case LOADING_ZONE: // dont use this one
-         * autonInstructions.add(new TurnDeg(180)); autonInstructions.add(new
-         * MoveInch(629.25)); autonInstructions.add(new StartPushing());
-         * autonInstructions.add(new WaitMs(3000)); autonInstructions.add(new
-         * MoveInch(-629.25)); autonInstructions.add(new TurnDeg(180));
-         * autonInstructions.add(new MoveInch(126)); break; default: // TODO make
-         * fallback break; } } else { // TODO make fallback } } else { // TODO
-         * autonInstructions.add(new TurnDeg(90)); }
-         */
+        rotationPID = new ProfiledPIDController(rotationGains.P, rotationGains.I, rotationGains.D, ROTATIONAL_GAIN_CONSTRAINTS);
+
         switch (selectedChallenge) {
             case GALACTIC_SEARCH:
                 switch (galacticSearch) {
