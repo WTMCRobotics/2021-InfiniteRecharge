@@ -37,6 +37,9 @@ import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.auton.*;
 import io.github.pseudoresonance.pixy2api.Pixy2;
+import io.github.pseudoresonance.pixy2api.Pixy2CCC;
+import io.github.pseudoresonance.pixy2api.Pixy2CCC.Block;
+import io.github.pseudoresonance.pixy2api.links.SPILink;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -243,7 +246,6 @@ public class Robot extends TimedRobot {
     Solenoid hangSol = new Solenoid(1, PCM_RATCHET);
 
     Pixy2 pixy;
-    USBPixyLink pixyLink;
 
     /**
      * This function is run when the robot is first started up and should be used
@@ -294,8 +296,9 @@ public class Robot extends TimedRobot {
         leftSlave.set(ControlMode.Follower, LEFT_MASTER_ID);
         gyro.reset();
 
-        pixyLink = new USBPixyLink();
-        pixy = Pixy2.createInstance(pixyLink);
+        // pixyLink = new USBPixyLink();
+        
+        pixy = Pixy2.createInstance(new SPILink());
         pixy.init();
     }
 
@@ -379,7 +382,6 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledPeriodic() {
-        System.out.println(pixy.getFPS());
         try {
             selectedChallenge = CHALLENGE_CHOOSER.getSelected();
             if (selectedChallenge == null) {
@@ -482,6 +484,7 @@ public class Robot extends TimedRobot {
             case AUTONAV:
                 switch (selectedPath) {
                     case BARREL_RACING:
+                        autonInstructions.add(new MoveInch(36)); // TODO remove this
 
                         break;
                     case SLALOM:
@@ -652,6 +655,12 @@ public class Robot extends TimedRobot {
 
         initializeMotionMagicMaster(rightMaster);
         initializeMotionMagicMaster(leftMaster);
+
+        Pixy2CCC ccc = pixy.getCCC();
+        ccc.getBlocks();
+        for (Block b : ccc.getBlockCache()) {
+            System.out.println("Found block: (" + b.getX() + ", " + b.getY() + ") - " + b.getWidth() + "x" + b.getHeight());
+        }
     }
 
     public void testInit() {
