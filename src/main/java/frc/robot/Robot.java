@@ -379,10 +379,23 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledInit() {
+        SmartDashboard.putNumber("Proportion", gains.P);
+        SmartDashboard.putNumber("Integral", gains.I);
+        SmartDashboard.putNumber("Derivative", gains.D);
+        SmartDashboard.putNumber("rotationProportion", rotationGains.P);
+        SmartDashboard.putNumber("rotationIntegral", rotationGains.I);
+        SmartDashboard.putNumber("rotationDerivative", rotationGains.D);
     }
 
     @Override
     public void disabledPeriodic() {
+        gains.P = SmartDashboard.getNumber("Proportion", gains.P);
+        gains.I = SmartDashboard.getNumber("Integral", gains.I);
+        gains.D = SmartDashboard.getNumber("Derivative", gains.D);
+        rotationGains.P = SmartDashboard.getNumber("rotationProportion", rotationGains.P);
+        rotationGains.I = SmartDashboard.getNumber("rotationIntegral", rotationGains.I);
+        rotationGains.D = SmartDashboard.getNumber("rotationDerivative", rotationGains.D);
+
         try {
             selectedChallenge = CHALLENGE_CHOOSER.getSelected();
             if (selectedChallenge == null) {
@@ -690,13 +703,6 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void testPeriodic() {
-        gains.P = SmartDashboard.getNumber("Proportion", gains.P);
-        gains.I = SmartDashboard.getNumber("Integral", gains.I);
-        gains.D = SmartDashboard.getNumber("Derivative", gains.D);
-        rotationGains.P = SmartDashboard.getNumber("rotationProportion", rotationGains.P);
-        rotationGains.I = SmartDashboard.getNumber("rotationIntegral", rotationGains.I);
-        rotationGains.D = SmartDashboard.getNumber("rotationDerivative", rotationGains.D);
-
         initializeMotionMagicMaster(rightMaster);
         initializeMotionMagicMaster(leftMaster);
 
@@ -708,12 +714,6 @@ public class Robot extends TimedRobot {
     }
 
     public void testInit() {
-        SmartDashboard.putNumber("Proportion", gains.P);
-        SmartDashboard.putNumber("Integral", gains.I);
-        SmartDashboard.putNumber("Derivative", gains.D);
-        SmartDashboard.putNumber("rotationProportion", rotationGains.P);
-        SmartDashboard.putNumber("rotationIntegral", rotationGains.I);
-        SmartDashboard.putNumber("rotationDerivative", rotationGains.D);
     }
 
     /**
