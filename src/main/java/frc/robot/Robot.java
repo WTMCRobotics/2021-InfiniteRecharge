@@ -147,6 +147,15 @@ public class Robot extends TimedRobot {
     static final Constraints ROTATIONAL_GAIN_CONSTRAINTS = new Constraints(Double.POSITIVE_INFINITY, 20); // m/s and m/s^2
     ProfiledPIDController rotationPID;
 
+    /** true if test is done */
+    boolean testDone = false;
+    /** true = move, false = rotate */
+    boolean testRotation = false;
+    /** number of inches to move in test */
+    double testMoveDistance = 24;
+    /** number of degrees to rotate in test */
+    double testTurnAmount = 90;
+
     /** The maximum distance from the destination considered close enough */
     private static final double distanceMarginOfError = 0.5;
 
@@ -239,7 +248,7 @@ public class Robot extends TimedRobot {
 
     static final int PCM_RATCHET = 2;
 
-    Compressor compressor = new Compressor(1);
+    Compressor compressor = null;
 
     DoubleSolenoid drawbridgeSol = new DoubleSolenoid(1, PCM_DRAWBRIDGE_IN, PCM_DRAWBRIDGE_OUT);
     Solenoid hangSol = new Solenoid(1, PCM_RATCHET);
@@ -257,6 +266,8 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         System.out.println("starting robotInit()");
+
+        compressor = new Compressor(1);
 
         CHALLENGE_CHOOSER.addOption("Galactic Search", Challenge.GALACTIC_SEARCH);
         CHALLENGE_CHOOSER.addOption("AutoNav", Challenge.AUTONAV);
@@ -385,6 +396,12 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("rotationProportion", rotationGains.P);
         SmartDashboard.putNumber("rotationIntegral", rotationGains.I);
         SmartDashboard.putNumber("rotationDerivative", rotationGains.D);
+
+        SmartDashboard.putBoolean("rotate", testRotation);
+        SmartDashboard.putNumber("moveDistance", testMoveDistance);
+        SmartDashboard.putNumber("turnAmount", testTurnAmount);
+        
+        pixy.setLamp((byte)0, (byte)0);
     }
 
     @Override
@@ -395,6 +412,10 @@ public class Robot extends TimedRobot {
         rotationGains.P = SmartDashboard.getNumber("rotationProportion", rotationGains.P);
         rotationGains.I = SmartDashboard.getNumber("rotationIntegral", rotationGains.I);
         rotationGains.D = SmartDashboard.getNumber("rotationDerivative", rotationGains.D);
+
+        testRotation = SmartDashboard.getBoolean("rotate", testRotation);
+        testMoveDistance = SmartDashboard.getNumber("moveDistance", testMoveDistance);
+        testTurnAmount = SmartDashboard.getNumber("turnAmount", testTurnAmount);
 
         try {
             selectedChallenge = CHALLENGE_CHOOSER.getSelected();
@@ -467,6 +488,7 @@ public class Robot extends TimedRobot {
 
         switch (selectedChallenge) {
             case GALACTIC_SEARCH:
+                pixy.setLamp((byte)1, (byte)0);
                 switch (galacticSearch) {
                 case BlueA:
                     // Blue A: (B1)
@@ -703,17 +725,27 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void testPeriodic() {
-        initializeMotionMagicMaster(rightMaster);
-        initializeMotionMagicMaster(leftMaster);
 
-        Pixy2CCC ccc = pixy.getCCC();
-        ccc.getBlocks();
-        for (Block b : ccc.getBlockCache()) {
-            System.out.println("Found block: (" + b.getX() + ", " + b.getY() + ") - " + b.getWidth() + "x" + b.getHeight());
+        if (!testDone || true) {
+            if (testRotation) {
+                testDone = turnDegs(testTurnAmount);
+            } else {
+                testDone = moveInches(testMoveDistance);
+            }
+        } else {
+            leftMaster.set(ControlMode.PercentOutput, 0);
+            rightMaster.set(ControlMode.PercentOutput, 0);
         }
     }
 
     public void testInit() {
+        resetEncoders();
+        gyro.reset();
+        testDone = false;
+        rotationPID = new ProfiledPIDController(rotationGains.P, rotationGains.I, rotationGains.D, ROTATIONAL_GAIN_CONSTRAINTS);
+
+        initializeMotionMagicMaster(rightMaster);
+        initializeMotionMagicMaster(leftMaster);
     }
 
     /**
@@ -795,11 +827,11 @@ public class Robot extends TimedRobot {
         }
         double output = MathUtil.clamp(rotationPID.calculate(gyro.getAngle(), degrees), -1, 1);
         System.out.println(rotationPID.getPositionError() + "    " + output);
-        if (output > 0) {
-            output += 0.10;
-        } else if (output < 0) {
-            output -= 0.10;
-        }
+        // if (output > 0) {
+        //     output += 0.10;
+        // } else if (output < 0) {
+        //     output -= 0.10;
+        // }
         if (
             Math.abs(gyro.getAngle() - degrees) < angleMarginOfError
             && Math.abs(rightMaster.getSelectedSensorVelocity()) < 1024 / 4
