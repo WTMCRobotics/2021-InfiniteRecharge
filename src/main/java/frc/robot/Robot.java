@@ -142,8 +142,9 @@ public class Robot extends TimedRobot {
     // the object that is the navX-MXP
     public AHRS gyro = new AHRS(Port.kMXP);
     static final Gains PRACTICE_ROTATION_GAINS = new Gains(0.004, 0.003, 0.001, 0.0, 0, 0.0);
-    static final Gains COMPETITION_ROTATION_GAINS = new Gains(0.04, 0.003, 0.001, 0.0, 0, 0.0);
+    static final Gains COMPETITION_ROTATION_GAINS = new Gains(0.06, 0.003, 0.001, 0.0, 0, 0.0);
     static Gains rotationGains;
+
     static final Constraints ROTATIONAL_GAIN_CONSTRAINTS = new Constraints(Double.POSITIVE_INFINITY, 20); // m/s and m/s^2
     ProfiledPIDController rotationPID;
 
@@ -157,7 +158,7 @@ public class Robot extends TimedRobot {
     double testTurnAmount = 90;
 
     /** The maximum distance from the destination considered close enough */
-    private static final double distanceMarginOfError = 0.5;
+    private static final double distanceMarginOfError = 2;
 
     /** The margin of error for angles when turning in auton */
     private static final double angleMarginOfError = 5;
@@ -171,7 +172,7 @@ public class Robot extends TimedRobot {
     boolean ArcadeDrive = true;
 
     static final Gains PRACTICE_ROBOT_GAINS = new Gains(0.2, 0.00035, 1.5, 0.2, 0, 1.0);
-    static final Gains COMPETITION_ROBOT_GAINS = new Gains(0.075, 0.0, 0.0, 0.2, 0, 1.0);
+    static final Gains COMPETITION_ROBOT_GAINS = new Gains(0.35, 0.00001, 100, 0.2, 0, 1.0);
     static Gains gains; // used for drivetrain motion magic when moving and is ste to
                         // PRACTICE_ROBOT_GAINS or COMPETITION_ROBOT_GAINS
 
