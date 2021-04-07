@@ -781,6 +781,8 @@ public class Robot extends TimedRobot {
             && Math.abs(rightMaster.getActiveTrajectoryVelocity()) < inchesToTicks(1) * 10
         ) {
             System.out.println("done");
+            rightMaster.set(ControlMode.PercentOutput, 0);
+            leftMaster.set(ControlMode.PercentOutput, 0);
             return true;
         } else {
             return false;
