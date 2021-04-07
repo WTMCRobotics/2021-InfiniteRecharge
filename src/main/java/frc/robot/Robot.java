@@ -630,8 +630,6 @@ public class Robot extends TimedRobot {
                     intake.set(ControlMode.PercentOutput, INTAKE_SPEED_OUT);
                 }
 
-                break;
-
             case AUTONAV:
             
                 while (!autonInstructions.isEmpty() && autonInstructions.get(0).doit(this)) {
