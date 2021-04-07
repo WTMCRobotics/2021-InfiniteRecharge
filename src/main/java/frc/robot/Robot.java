@@ -724,7 +724,7 @@ public class Robot extends TimedRobot {
     @Override
     public void testPeriodic() {
 
-        if (!testDone || true) {
+        if (!testDone) {
             if (testRotation) {
                 testDone = turnDegs(testTurnAmount);
             } else {
