@@ -493,50 +493,50 @@ public class Robot extends TimedRobot {
                 switch (galacticSearch) {
                 case BlueA:
                     // Blue A: (B1)
-                    autonInstructions.add(new TurnDeg(-30.964)); // - Turn 30.964 deg
+                    autonInstructions.add(new TurnDeg(30.964)); // - Turn 30.964 deg
                     autonInstructions.add(new MoveInch(14.577 * 12)); // - Move 14.577 ft
                     // - Collect 1
-                    autonInstructions.add(new TurnDeg(102.529)); // - Turn -102.529 deg
+                    autonInstructions.add(new TurnDeg(-102.529)); // - Turn -102.529 deg
                     autonInstructions.add(new MoveInch(7.906 * 12)); // - Move 7.906 ft
                     // - Collect 1
-                    autonInstructions.add(new TurnDeg(-135)); // - Turn 135 deg
+                    autonInstructions.add(new TurnDeg(135)); // - Turn 135 deg
                     autonInstructions.add(new MoveInch(12 * 12)); // - Move >11.180 ft (collect 1)
                     break;
                 case BlueB:
                     // Blue B: (D1)
                     autonInstructions.add(new MoveInch(12.5 * 12));
                     // - Collect 1
-                    autonInstructions.add(new TurnDeg(-45));
-                    autonInstructions.add(new MoveInch(7.071 * 12));
-                    // - Collect 1
-                    autonInstructions.add(new TurnDeg(-90));
-                    autonInstructions.add(new MoveInch(7.071 * 12));
-                    // - Collect 1
                     autonInstructions.add(new TurnDeg(45));
-                    autonInstructions.add(new MoveInch(5 * 12));
-                    break;
-                case RedA:
-                    // Red A: (B1)
-                    autonInstructions.add(new TurnDeg(-26.565));
-                    autonInstructions.add(new MoveInch(11.180 * 12));//(collect 1)
-                    // - Collect 1
-                    autonInstructions.add(new TurnDeg(81.870));
-                    autonInstructions.add(new MoveInch(7.906 * 12));
-                    // - Collect 1
-                    autonInstructions.add(new TurnDeg(-71.565));
-                    autonInstructions.add(new MoveInch(15 * 12));
-                    break;
-                case RedB:
-                    // Red B: (B1)
-                    autonInstructions.add(new MoveInch(5 * 12));
-                    // - Collect 1
-                    autonInstructions.add(new TurnDeg(-45));
                     autonInstructions.add(new MoveInch(7.071 * 12));
                     // - Collect 1
                     autonInstructions.add(new TurnDeg(90));
                     autonInstructions.add(new MoveInch(7.071 * 12));
                     // - Collect 1
                     autonInstructions.add(new TurnDeg(-45));
+                    autonInstructions.add(new MoveInch(5 * 12));
+                    break;
+                case RedA:
+                    // Red A: (B1)
+                    autonInstructions.add(new TurnDeg(26.565));
+                    autonInstructions.add(new MoveInch(11.180 * 12));//(collect 1)
+                    // - Collect 1
+                    autonInstructions.add(new TurnDeg(-81.870));
+                    autonInstructions.add(new MoveInch(7.906 * 12));
+                    // - Collect 1
+                    autonInstructions.add(new TurnDeg(71.565));
+                    autonInstructions.add(new MoveInch(15 * 12));
+                    break;
+                case RedB:
+                    // Red B: (B1)
+                    autonInstructions.add(new MoveInch(5 * 12));
+                    // - Collect 1
+                    autonInstructions.add(new TurnDeg(45));
+                    autonInstructions.add(new MoveInch(7.071 * 12));
+                    // - Collect 1
+                    autonInstructions.add(new TurnDeg(-90));
+                    autonInstructions.add(new MoveInch(7.071 * 12));
+                    // - Collect 1
+                    autonInstructions.add(new TurnDeg(45));
                     autonInstructions.add(new MoveInch(12.5 * 12));
                     break;
                 default:
@@ -548,23 +548,23 @@ public class Robot extends TimedRobot {
                 switch (selectedPath) {
                     case BARREL_RACING:
                         autonInstructions.add(new MoveInch(135+ Robot.robotLength / 2));
-                        autonInstructions.add(new TurnDeg(60)); // c6.5
+                        autonInstructions.add(new TurnDeg(-60)); // c6.5
                         autonInstructions.add(new MoveInch(-90));
-                        autonInstructions.add(new TurnDeg(60)); // e5
+                        autonInstructions.add(new TurnDeg(-60)); // e5
                         autonInstructions.add(new MoveInch(90));
-                        autonInstructions.add(new TurnDeg(60)); // c3.5
+                        autonInstructions.add(new TurnDeg(-60)); // c3.5
                         autonInstructions.add(new MoveInch(-165));
-                        autonInstructions.add(new TurnDeg(-90)); // c9
+                        autonInstructions.add(new TurnDeg(90)); // c9
                         autonInstructions.add(new MoveInch(60));
-                        autonInstructions.add(new TurnDeg(90)); // a9
+                        autonInstructions.add(new TurnDeg(-90)); // a9
                         autonInstructions.add(new MoveInch(90));
-                        autonInstructions.add(new TurnDeg(-45)); // a6
+                        autonInstructions.add(new TurnDeg(45)); // a6
                         autonInstructions.add(new MoveInch(120 * Math.sqrt(2)));
-                        autonInstructions.add(new TurnDeg(45)); // e6
+                        autonInstructions.add(new TurnDeg(-45)); // e6
                         autonInstructions.add(new MoveInch(-30));
-                        autonInstructions.add(new TurnDeg(-90)); // e11
+                        autonInstructions.add(new TurnDeg(90)); // e11
                         autonInstructions.add(new MoveInch(60));
-                        autonInstructions.add(new TurnDeg(90)); // c11
+                        autonInstructions.add(new TurnDeg(-90)); // c11
                         autonInstructions.add(new MoveInch(270));
                         break;
                     case SLALOM:
