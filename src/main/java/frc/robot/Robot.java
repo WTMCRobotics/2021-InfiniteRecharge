@@ -401,8 +401,6 @@ public class Robot extends TimedRobot {
         SmartDashboard.putBoolean("rotate", testRotation);
         SmartDashboard.putNumber("moveDistance", testMoveDistance);
         SmartDashboard.putNumber("turnAmount", testTurnAmount);
-        
-        pixy.setLamp((byte)0, (byte)0);
     }
 
     @Override
@@ -429,6 +427,7 @@ public class Robot extends TimedRobot {
                     throw new NullPointerException("selectedPath can't be null");
                 }
             }
+            pixy.setLamp(selectedChallenge == Challenge.GALACTIC_SEARCH ? (byte)1 : (byte)0, (byte)0);
 
             // this line will run only if the other lines didn't crash
             SmartDashboard.putBoolean("Ready", true);
@@ -489,7 +488,6 @@ public class Robot extends TimedRobot {
 
         switch (selectedChallenge) {
             case GALACTIC_SEARCH:
-                pixy.setLamp((byte)1, (byte)0);
                 switch (galacticSearch) {
                 case BlueA:
                     // Blue A: (B1)
@@ -643,6 +641,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void teleopInit() {
+        pixy.setLamp((byte)0, (byte)0);
     }
 
     /**
