@@ -633,7 +633,9 @@ public class Robot extends TimedRobot {
                 while (!autonInstructions.isEmpty() && autonInstructions.get(0).doit(this)) {
                     autonInstructions.remove(0);
                 }
-        }
+                break;
+            default:
+                throw new Error("unknown auton mode")
     }
 
     /**
