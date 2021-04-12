@@ -635,7 +635,8 @@ public class Robot extends TimedRobot {
                 }
                 break;
             default:
-                throw new Error("unknown auton mode")
+                throw new Error("unknown auton mode");
+        }
     }
 
     /**
